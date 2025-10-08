@@ -194,7 +194,7 @@ class Emprunt(models.Model):
         Vérifie si cet emprunt est en retard (emprunt >7jours).
         """
         if not self.date_retour and self.date_emprunt:
-            return (date.today() - self.date_retour) > timedelta(days=7)
+            return (date.today() - self.date_emprunt) > timedelta(days=7)
         return False
 
     def retourner(self):
