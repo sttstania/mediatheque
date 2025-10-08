@@ -1,8 +1,5 @@
 from datetime import timedelta, date
-from itertools import chain
-from msilib.schema import Media
 
-from django.contrib.auth.models import User
 from django.db import models
 
 #--------------------------------------------
@@ -23,10 +20,10 @@ class Media(models.Model):
         abstract = True
 
     def emprunter(self, emprunteur):
-        '''
+        """
         Méthode pour emprunter ce média.
         Met à jour les champs `disponible`, `date_emprunt` et `emprunteur`.
-        '''
+        """
         if not self.disponible:
             raise Exception(f"Le média {self.titre} n'est pas disponible.")
         self.disponible = False
@@ -35,20 +32,20 @@ class Media(models.Model):
         self.save()
 
     def retourner(self):
-        '''
+        """
         Méthode pour retourner ce media.
         Remet à jour les champs pour savoir que le media est disponible.
-        '''
+        """
         self.disponible = True
         self.date_emprunt = None
         self.emprunteur = None
         self.save()
 
     def est_en_retard(self):
-        '''
+        """
         Vérifie si le media est en retar(+7j)
         True si en retard, False sinon
-        '''
+        """
         if self.date_emprunt:
             return (date.today() - self.date_emprunt) > timedelta(days=7)
         return False
@@ -113,20 +110,20 @@ class Emprunteur(models.Model):
     bloque = models.BooleanField(default=False) #true si emprunteur bloqué(retard)
 
     def __str__(self):
-        return (f'Emprunteur: {self.membre.nom} {self.membre.prenom}')
+        return f'Emprunteur: {self.membre.nom} {self.membre.prenom}'
 
 
     @property
-    def medias(self):
+    def medias(self) -> list[Media]:
         """
         Propriété retournant la liste de tous les médias empruntés par cet emprunteur.
         Utilise `chain` pour concaténer les requêtes sans évaluer chaque QuerySet.
         """
-        return list(chain(
-            Livre.objects.filter(emprunteur=self),
-            CD.objects.filter(emprunteur=self),
-            DVD.objects.filter(emprunteur=self),
-        ))
+        medias = []
+        medias.extend(Livre.objects.filter(emprunteur=self))
+        medias.extend(CD.objects.filter(emprenteur=self))
+        medias.extend(DVD.objects.filter(emprenteur=self))
+        return medias
 
     def a_un_retard(self):
         """
