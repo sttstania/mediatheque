@@ -1,6 +1,8 @@
 from datetime import timedelta, date
 
 from django.db import models
+from django import forms
+
 
 #--------------------------------------------
 #Modèle abstrait Media (base pour les médias)
@@ -50,7 +52,6 @@ class Media(models.Model):
             return (date.today() - self.date_emprunt) > timedelta(days=7)
         return False
 
-
 #--------------------------------------------
 #Modeles concrets des Médias(héritent de Média)
 #--------------------------------------------
@@ -74,32 +75,26 @@ class JeuDePlateau(models.Model):
     createur = models.CharField(max_length=100, blank=True, null=True)
 
     def emprunter(self, emprunteur):
-        """
-        Méthode pour interdire l'mprunt des jeux
-        """
         raise Exception("Les jeux de plateau ne peuvent pas être empruntés")
 
 #--------------------------------------------
 #Modèle Membre
 #--------------------------------------------
 class Membre(models.Model):
-    """
-    Membre inscrit à la bibliotheque.
-    Pas d'authentification.
-    """
     nom = models.CharField(max_length=100)
-    prenom = models.CharField(max_length=100)
-    date_inscription = models.DateField(auto_now_add=True) # Date automatique à la création
 
     def __str__(self):
-        return (f'{self.nom} {self.prenom}'
-                f'({self.date_inscription})')
+        return f"{self.nom}"
 
-    class Meta:
-        ordering = ['nom']  # Tri par nom dans l'admin et les requêtes
+    def mettre_a_jour(self, nouveau_nom):
+        self.nom = nouveau_nom
+        self.save()
+
+    def supprimer(self):
+        self.delete()
 
 # =============================================
-# Modèle Emprunteur (statut d'emprunt d'un membre)
+# Modèle Emprunteur
 # =============================================
 class Emprunteur(models.Model):
     """
@@ -125,31 +120,15 @@ class Emprunteur(models.Model):
         medias.extend(DVD.objects.filter(emprenteur=self))
         return medias
 
-    def a_un_retard(self):
-        """
-        Vérifie si l'emprenteur a au moins un média en retard
-        """
-        return any(media.est_en_retard() for media in self.medias)
-
-
     def verifier_retard(self):
-        """
-        Met à jour lz statut 'bloque' si l'emprunteur a un retard.
-        Returns: True si bloqué, False sinon.
-        """
-        if self.a_un_retard():
-            self.bloque = True
-            self.save()
+        """Met à jour lz statut 'bloque' si l'emprunteur a un retard."""
+        self.bloque = any(media.est_en_retard() for media in self.medias)
+        self.save()
         return self.bloque
 
     def peut_emprunter(self):
-        """
-        Vérifie si l'emprunteur peut emprunter un nouveau média.
-        - Non bloqué
-        - Maximum 3 média empruntés
-        - Aucun retard
-        """
-        self.verifier_retard() #mets à jours statut bloqué si retard
+        """Vérifie si l'emprunteur peut emprunter(non bloqué, <= 3médias, aucun retard)"""
+        self.verifier_retard()
         return not self.bloque and len(self.medias) <= 3
 
     def emprunter_media(self, media):
@@ -159,7 +138,7 @@ class Emprunteur(models.Model):
         """
         if not self.peut_emprunter():
             raise Exception(f"Le membre {self.membre.nom} {self.membre.prenom} ne peut pas emprunter")
-        Emprunt.objects.create(emprunteur=self, media=media) #crée un enregistrement d'emprunt
+        Emprunt.objects.create(emprunteur=self, media=media)
         media.emprunter(self) # met à jour média
 
     def retourner_media(self, media):
@@ -171,7 +150,6 @@ class Emprunteur(models.Model):
             media.retourner()
         else:
             raise Exception("Ce média n'est pas emprunter par ce membre")
-
 
 # =============================================
 # Modèle Emprunt (historique des emprunts)
@@ -186,14 +164,6 @@ class Emprunt(models.Model):
     date_emprunt = models.DateField(auto_now_add=True) # date automatique a la création
     date_retour = models.DateField(null=True, blank=True ) # Null tant que non retourné
 
-    def est_en_retard(self):
-        """
-        Vérifie si cet emprunt est en retard (emprunt >7jours).
-        """
-        if not self.date_retour and self.date_emprunt:
-            return (date.today() - self.date_emprunt) > timedelta(days=7)
-        return False
-
     def retourner(self):
         """
         Marque cet emprunt en retourné et met a jour le média.
@@ -204,3 +174,5 @@ class Emprunt(models.Model):
         self.save()
         self.media.retourner()
 
+class CreationMembre(forms.Form):
+    nom = forms.CharField(required=False)

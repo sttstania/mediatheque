@@ -5,13 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1121556-36a0-419d-935b-ceb03ba77a55" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/creation_membre.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bibliothecaire/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,11 +39,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "c-m-bib",
+    "git-widget-placeholder": "views",
     "last_opened_file_path": "C:/Users/tania/Desktop/WEB/backend/python/mediatheque",
     "settings.editor.selected.configurable": "DSTables"
   }
@@ -54,5 +65,16 @@
       <updated>1759740455898</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bibliothecaire/models.py</url>
+          <line>50</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
