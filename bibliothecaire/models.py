@@ -105,7 +105,7 @@ class Emprunteur(models.Model):
     bloque = models.BooleanField(default=False) #true si emprunteur bloqué(retard)
 
     def __str__(self):
-        return f'Emprunteur: {self.membre.nom} {self.membre.prenom}'
+        return f'Emprunteur: {self.membre.nom}'
 
 
     @property
@@ -116,8 +116,8 @@ class Emprunteur(models.Model):
         """
         medias = []
         medias.extend(Livre.objects.filter(emprunteur=self))
-        medias.extend(CD.objects.filter(emprenteur=self))
-        medias.extend(DVD.objects.filter(emprenteur=self))
+        medias.extend(CD.objects.filter(emprunteur=self))
+        medias.extend(DVD.objects.filter(emprunteur=self))
         return medias
 
     def verifier_retard(self):
@@ -170,7 +170,6 @@ class Emprunt(models.Model):
         Returns:
         """
         self.date_retour = date.today()
-        self.date_emprunt = None
         self.save()
         self.media.retourner()
 

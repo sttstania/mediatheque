@@ -28,5 +28,5 @@ def liste_media(request):
     return render(
         request,
         'liste_media.html',
-        {'livre':livre, 'cds':CD,'dvds':DVD,'jeux':jeux},
+        {'livres': livre, 'cds': cds,'dvds': dvds,'jeux': jeux},
     )
