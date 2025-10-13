@@ -137,8 +137,17 @@ class Emprunteur(models.Model):
         Crée un enregistrement Emprunt et met à jour le média.
         """
         if not self.peut_emprunter():
-            raise Exception(f"Le membre {self.membre.nom} {self.membre.prenom} ne peut pas emprunter")
-        Emprunt.objects.create(emprunteur=self, media=media)
+            raise Exception(f"Le membre {self.membre.nom} ne peut pas emprunter")
+
+        if isinstance(media, Livre):
+            Emprunt.objects.create(emprunteur=self, livre=media)
+        elif isinstance(media, CD):
+            Emprunt.objects.create(emprunteur=self, cd=media)
+        elif isinstance(media, DVD):
+            Emprunt.objects.create(emprunteur=self, dvd=media)
+        else:
+            raise Exception("Type de média non empruntable")
+
         media.emprunter(self) # met à jour média
 
     def retourner_media(self, media):
@@ -160,7 +169,9 @@ class Emprunt(models.Model):
     Permet de suivre l'historique et gérer les retards.
     """
     emprunteur = models.ForeignKey(Emprunteur, on_delete=models.CASCADE)
-    media = models.ForeignKey(Media, on_delete=models.CASCADE)
+    livre = models.ForeignKey(Livre, on_delete=models.CASCADE, null=True, blank=True)
+    cd = models.ForeignKey(CD, on_delete=models.CASCADE, null=True, blank=True)
+    dvd = models.ForeignKey(DVD, on_delete=models.CASCADE, null=True, blank=True)
     date_emprunt = models.DateField(auto_now_add=True) # date automatique a la création
     date_retour = models.DateField(null=True, blank=True ) # Null tant que non retourné
 
@@ -171,7 +182,12 @@ class Emprunt(models.Model):
         """
         self.date_retour = date.today()
         self.save()
-        self.media.retourner()
+        if self.livre:
+            self.livre.retourner()
+        if self.cd:
+            self.cd.retourner()
+        if self.dvd:
+            self.dvd.retourner()
 
 class CreationMembre(forms.Form):
     nom = forms.CharField(required=False)

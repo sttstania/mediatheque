@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Liste de médias{% end block %}
+{% block title %}Liste de médias{% endblock %}
 {% block content %}
 <h1>Liste des médias</h1>
 
@@ -10,18 +10,13 @@
             <th>Auteur</th>
             <th>Disponible</th>
         </tr>
-        {for cd in cds %}
+        {% for livre in livres %}
         <tr>
-            <td>{livre.titre}</td>
-            <td>{livre.auteur}</td>
-            <td>
-                {% if livre.disponible %}
-                    Oui
-                {% else %}
-                    Non
-                {% endif %}
-            </td>
+            <td>{{ livre.titre }}</td>
+            <td>{{ livre.auteur }}</td>
+            <td>{{ livre.disponible|yesno:"Oui,Non" }}</td>
         </tr>
+        {% empty %}
         <tr>
             <td colspan="3">Aucun livre trouvé</td>
         </tr>
@@ -33,20 +28,15 @@
         <tr>
             <th>Nom du CD</th>
             <th>Artiste</th>
-            <th>Disponible: {cd.disponible}</th>
+            <th>Disponible</th>
         </tr>
-        {for cd in cds %}
+        {% for cd in cds %}
         <tr>
-            <td>{cd.titre}</td>
-            <td>{cd.auteur}</td>
-            <td>
-                {% if cd.disponible %}
-                    Oui
-                {% else %}
-                    Non
-                {% endif %}
-            </td>
+            <td>{{ cd.titre }}</td>
+            <td>{{ cd.auteur }}</td>
+            <td>{{ cd.disponible|yesno:"Oui,Non" }}</td>
         </tr>
+        {% empty %}
         <tr>
             <td colspan="3">Aucun CD trouvé</td>
         </tr>
@@ -60,18 +50,13 @@
             <th>Réalisateur</th>
             <th>Disponible</th>
         </tr>
-        {for dvd in dvds %}
+        {% for dvd in dvds %}
         <tr>
-            <td>{dvd.titre}</td>
-            <td>{dvd.auteur}</td>
-            <td>
-                {% if dvd.disponible %}
-                    Oui
-                {% else %}
-                    Non
-                {% endif %}
-            </td>
+            <td>{{ dvd.titre }}</td>
+            <td>{{ dvd.auteur }}</td>
+            <td>{{ dvd.disponible|yesno:"Oui,Non" }}</td>
         </tr>
+        {% empty %}
         <tr>
             <td colspan="3">Aucun DVD trouvé</td>
         </tr>
@@ -82,16 +67,17 @@
     <table>
         <tr>
             <th>Nom du jeu de plateau</th>
-            <th>Createur</th>
+            <th>Créateur</th>
         </tr>
-        {for jeu in jeux %}
+        {% for jeu in jeux %}
         <tr>
-            <td>{jeu.titre}</td>
-            <td>{jeu.auteur}</td>
+            <td>{{jeu.titre}}</td>
+            <td>{{jeu.auteur}}</td>
         </tr>
+        {% empty %}
         <tr>
-            <td colspan="3">Aucun jeu de plateau trouvé</td>
+            <td colspan="2">Aucun jeu de plateau trouvé</td>
         </tr>
         {% endfor %}
     </table>
-{% end block %}
+{% endblock %}
