@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Liste de Livres{% endblock %}
+{% block content %}
 
-</body>
-</html>
+<h2>Livres</h2>
+    <table>
+        <tr>
+            <th>Nom du livre</th>
+            <th>Auteur</th>
+            <th>Disponible</th>
+        </tr>
+        {% for livre in livres %}
+        <tr>
+            <td>{{ livre.titre }}</td>
+            <td>{{ livre.auteur }}</td>
+            <td>{{ livre.disponible|yesno:"Oui,Non" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Aucun livre trouvé</td>
+        </tr>
+        {% endfor %}
+    </table>
+ {% endblock %}

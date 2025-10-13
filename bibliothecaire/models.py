@@ -1,8 +1,6 @@
 from datetime import timedelta, date
 
 from django.db import models
-from django import forms
-
 
 #--------------------------------------------
 #Modèle abstrait Media (base pour les médias)
@@ -49,7 +47,7 @@ class Media(models.Model):
         True si en retard, False sinon
         """
         if self.date_emprunt:
-            return (date.today() - self.date_emprunt) > timedelta(days=7)
+            return (date.today() - self.date_emprunt) >= timedelta(days=7)
         return False
 
 #--------------------------------------------
@@ -82,9 +80,10 @@ class JeuDePlateau(models.Model):
 #--------------------------------------------
 class Membre(models.Model):
     nom = models.CharField(max_length=100)
+    nombre_emprunts = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return f"{self.nom}"
+        return self.nom
 
     def mettre_a_jour(self, nouveau_nom):
         self.nom = nouveau_nom
@@ -109,7 +108,7 @@ class Emprunteur(models.Model):
 
 
     @property
-    def medias(self) -> list[Media]:
+    def medias(self):
         """
         Propriété retournant la liste de tous les médias empruntés par cet emprunteur.
         Utilise `chain` pour concaténer les requêtes sans évaluer chaque QuerySet.
@@ -147,7 +146,6 @@ class Emprunteur(models.Model):
             Emprunt.objects.create(emprunteur=self, dvd=media)
         else:
             raise Exception("Type de média non empruntable")
-
         media.emprunter(self) # met à jour média
 
     def retourner_media(self, media):
@@ -189,5 +187,3 @@ class Emprunt(models.Model):
         if self.dvd:
             self.dvd.retourner()
 
-class CreationMembre(forms.Form):
-    nom = forms.CharField(required=False)

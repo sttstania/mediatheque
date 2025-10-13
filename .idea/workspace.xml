@@ -5,17 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1121556-36a0-419d-935b-ceb03ba77a55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/bibliothecaire/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/membre/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/modifier_membre.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/supprimer_membre.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bibliothecaire/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/apps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/creation_membre.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/creation_membre.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/liste_livre.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_livre.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/liste_media.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_media.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/liste_membres.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_membres.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bibliothecaire/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediatheque/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediatheque/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mediatheque/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mediatheque/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mediatheque/.idea/mediatheque.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mediatheque/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mediatheque/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/mediatheque/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediatheque/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/membre/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/membre/apps.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;views&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/tania/Desktop/WEB/backend/python/mediatheque&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;DSTables&quot;
   }
