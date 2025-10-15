@@ -13,6 +13,7 @@
     <tr>
         <th>Nom</th>
         <th>Nombre d'emprunts</th>
+        <th>Médias empruntés</th>
         <th>Bloqué</th>
         <th>Modifier</th>
         <th>Supprimer</th>
@@ -21,6 +22,21 @@
     <tr>
         <td>{{ membre.nom }}</td>
         <td>{{ membre.nb_emprunts }}</td>  {# Affiche le nombre d'emprunts  #}
+        <td>
+            {% for emprunt in membre.emprunt.emprunts_actuels %}
+                {% if emprunt.livre %}
+                    {{ emprunt.livre.titre }} (Livre)  - {{ emprunt.jours_emprunt }} jours<br>
+                {% endif %}
+                {% if emprunt.cd %}
+                    {{ emprunt.cd.titre }} (CD) - {{ emprunt.jours_emprunt }} jours<br>
+                {% endif %}
+                {% if emprunt.dvd %}
+                    {{ emprunt.dvd.titre }} (DVD) - {{ emprunt.jours_emprunt }} jours<br>
+                {% endif %}
+            {% empty %}
+                Aucun média emprunté
+            {% endfor %}
+        </td>
         <td>
             {% if membre.emprunteur.bloque %}
                 🚫 Oui
