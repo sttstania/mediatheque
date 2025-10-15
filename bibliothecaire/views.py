@@ -27,7 +27,7 @@ def modifier_membre(request, membre_id):
         form = CreationMembre(instance=membre)
     return render(request, "modifier_membre.html", {"form": form, "membre": membre})
 
-def supprimer_membre(request):
+def supprimer_membre(request, membre_id):
         membre = get_object_or_404(Membre, id=membre_id)
         if request.method == "POST":
             membre.delete()
