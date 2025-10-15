@@ -1,9 +1,6 @@
 {% extends "base.html" %}
-
-{% block title %}Création d'un membre{% endblock %}
-
+{% block title %}Ajouter un média{% endblock %}
 {% block content %}
-<h1>Créer un nouveau membre</h1>
 
 <form method="POST">
     {% csrf_token %}
@@ -14,6 +11,6 @@
 </form>
 
 <div>
-    <a href="{% url 'bibliothecaire:liste_membres' %}">Retour à la liste des membres</a>
+    <a href="{% url 'bibliothecaire:liste_media' %}">Retour à la liste des médias</a>
 </div>
 {% endblock %}

@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Membre, Livre, JeuDePlateau, CD, DVD
-from .forms import CreationMembre
-
+from .models import Membre, Livre, JeuDePlateau, CD, DVD, Media
+from .forms import CreationMembre, AjouterMedia
 
 
 def creation_membre(request):
@@ -52,3 +51,39 @@ def liste_media(request):
 def liste_livre(request):
     livres = Livre.objects.all()
     return render(request, 'liste_livre.html', {'livres': livres})
+
+def liste_cd(request):
+    cds = CD.objects.all()
+    return render(request, 'liste_cd.html', {'cds': cds})
+
+def liste_dvd(request):
+    dvds = DVD.objects.all()
+    return render(request, 'liste_dvd.html', {'dvds': dvds})
+
+def liste_jeux(request):
+    jeux = JeuDePlateau.objects.all()
+    return render(request, 'liste_jeu.html', {'jeux': jeux})
+
+def ajouter_media(request):
+    if request.method == "POST":
+        form = AjouterMedia(request.POST)
+        if form.is_valid():
+            type_media = form.cleaned_data['type_media']
+            titre = form.cleaned_data['titre']
+            createur = form.cleaned_data['createur']
+
+            # creation objet selon type média
+            if type_media == "livre":
+                Livre.objects.create(titre=titre, auteur=createur)
+            elif type_media == "CD":
+                CD.objects.create(titre=titre, artiste=createur)
+            elif type_media == "DVD":
+                DVD.objects.create(titre=titre, realisateur=createur)
+            elif type_media == "jeu":
+                JeuDePlateau.objects.create(titre=titre, createur=createur)
+
+            return redirect("bibliothecaire:liste_media")
+    else:
+        form = AjouterMedia()
+
+    return render(request, "ajouter_media.html", {"form": form})
