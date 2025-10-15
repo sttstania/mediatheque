@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1121556-36a0-419d-935b-ceb03ba77a55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/ajouter_media.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_cd.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_dvd.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_jeux.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/modifier_media.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bibliothecaire/templates/supprimer_media.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bibliothecaire/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/creation_membre.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/creation_membre.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/liste_livre.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_livre.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/templates/liste_media.html" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/templates/liste_media.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bibliothecaire/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/bibliothecaire/views.py" afterDir="false" />
@@ -42,18 +45,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tania/Desktop/WEB/backend/python/mediatheque&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;DSTables&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.views.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/tania/Desktop/WEB/backend/python/mediatheque",
+    "settings.editor.selected.configurable": "DSTables"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -89,6 +93,11 @@
           <url>file://$PROJECT_DIR$/bibliothecaire/forms.py</url>
           <line>10</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bibliothecaire/views.py</url>
+          <line>90</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

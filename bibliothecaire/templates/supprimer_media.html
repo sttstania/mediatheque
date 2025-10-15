@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Supprimer un média{% endblock %}
+{% block content %}
+<h1>Supprimer le média : {{ media.titre }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <p>Êtes-vous sûr de vouloir supprimer ce média ?</p>
+    <button type="submit">Oui, supprimer</button>
+</form>
+<a href="{% url 'bibliothecaire:liste_media' %}">⬅ Retour à la liste</a>
+{% endblock %}

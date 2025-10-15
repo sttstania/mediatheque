@@ -3,33 +3,30 @@
 {% block content %}
 <h1>Liste des médias</h1>
 
-<!-- Menu de navigation -->
-<nav>
-    <a href="{% url 'bibliothecaire:liste_livre' %}">Livres</a>
-    <a href="{% url 'bibliothecaire:liste_cd' %}">CDs</a>
-    <a href="{% url 'bibliothecaire:liste_dvd' %}">DVDs</a>
-    <a href="{% url 'bibliothecaire:liste_jeux' %}">Jeux de plateau</a>
-    <a href="{% url 'bibliothecaire:liste_media' %}">Tous</a>
-    <!-- Ajouter un média, visible pour bibliothecaires -->
-    <a href="{% url 'bibliothecaire:ajouter_media' %}">➕ Ajouter un média</a>
-</nav>
-
 <h2>Livres</h2>
 <table>
     <tr>
         <th>Nom du livre</th>
         <th>Auteur</th>
         <th>Disponible</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
     </tr>
     {% for livre in livres %}
     <tr>
         <td>{{ livre.titre }}</td>
         <td>{{ livre.auteur }}</td>
         <td>{{ livre.disponible|yesno:"Oui,Non" }}</td>
+        <td>
+            <a href="{% url 'bibliothecaire:modifier_media' 'livre' livre.id %}">Modifier</a>
+        </td>
+        <td>
+            <a href="{% url 'bibliothecaire:supprimer_media' 'livre' livre.id %}">Supprimer</a>
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="3">Aucun livre trouvé</td>
+        <td colspan="5">Aucun livre trouvé</td>
     </tr>
     {% endfor %}
 </table>
@@ -40,16 +37,24 @@
         <th>Nom du CD</th>
         <th>Artiste</th>
         <th>Disponible</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
     </tr>
     {% for cd in cds %}
     <tr>
         <td>{{ cd.titre }}</td>
         <td>{{ cd.artiste }}</td>
         <td>{{ cd.disponible|yesno:"Oui,Non" }}</td>
+        <td>
+            <a href="{% url 'bibliothecaire:modifier_media' 'cd' cd.id %}">Modifier</a>
+        </td>
+        <td>
+            <a href="{% url 'bibliothecaire:supprimer_media' 'cd' cd.id %}">Supprimer</a>
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="3">Aucun CD trouvé</td>
+        <td colspan="5">Aucun CD trouvé</td>
     </tr>
     {% endfor %}
 </table>
@@ -60,16 +65,24 @@
         <th>Nom du DVD</th>
         <th>Réalisateur</th>
         <th>Disponible</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
     </tr>
     {% for dvd in dvds %}
     <tr>
         <td>{{ dvd.titre }}</td>
         <td>{{ dvd.realisateur }}</td>
         <td>{{ dvd.disponible|yesno:"Oui,Non" }}</td>
+        <td>
+            <a href="{% url 'bibliothecaire:modifier_media' 'dvd' dvd.id %}">Modifier</a>
+        </td>
+        <td>
+            <a href="{% url 'bibliothecaire:supprimer_media' 'dvd' dvd.id %}">Supprimer</a>
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="3">Aucun DVD trouvé</td>
+        <td colspan="5">Aucun DVD trouvé</td>
     </tr>
     {% endfor %}
 </table>
@@ -79,15 +92,23 @@
     <tr>
         <th>Nom du jeu de plateau</th>
         <th>Créateur</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
     </tr>
     {% for jeu in jeux %}
     <tr>
         <td>{{jeu.titre}}</td>
         <td>{{jeu.createur}}</td>
+        <td>
+            <a href="{% url 'bibliothecaire:modifier_media' 'jeu' jeu.id %}">Modifier</a>
+        </td>
+        <td>
+            <a href="{% url 'bibliothecaire:supprimer_media' 'jeu' jeu.id %}">Supprimer</a>
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="2">Aucun jeu de plateau trouvé</td>
+        <td colspan="4">Aucun jeu de plateau trouvé</td>
     </tr>
     {% endfor %}
 </table>

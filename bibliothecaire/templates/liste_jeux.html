@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Liste de Livres{% endblock %}
+{% block content %}
+
+<h2>Jeux de plateau</h2>
+<table>
+    <tr>
+        <th>Nom du jeu de plateau</th>
+        <th>Créateur</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
+    </tr>
+    {% for jeu in jeux %}
+    <tr>
+        <td>{{jeu.titre}}</td>
+        <td>{{jeu.createur}}</td>
+        <td>
+            <a href="{% url 'bibliothecaire:modifier_media' 'jeu' jeu.id %}">Modifier</a>
+        </td>
+        <td>
+            <a href="{% url 'bibliothecaire:supprimer_media' 'jeu' jeu.id %}">Supprimer</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">Aucun jeu de plateau trouvé</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
