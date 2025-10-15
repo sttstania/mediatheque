@@ -128,7 +128,7 @@ class Emprunteur(models.Model):
     def peut_emprunter(self):
         """Vérifie si l'emprunteur peut emprunter(non bloqué, <= 3médias, aucun retard)"""
         self.verifier_retard()
-        return not self.bloque and len(self.medias) <= 3
+        return not self.bloque and len(self.medias) < 3
 
     def emprunter_media(self, media):
         """

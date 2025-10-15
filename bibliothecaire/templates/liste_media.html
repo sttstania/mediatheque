@@ -11,6 +11,9 @@
         <th>Disponible</th>
         <th>Modifier</th>
         <th>Supprimer</th>
+        <th>Emprunter média</th>
+        <th>Retourner média</th>
+
     </tr>
     {% for livre in livres %}
     <tr>
@@ -23,10 +26,20 @@
         <td>
             <a href="{% url 'bibliothecaire:supprimer_media' 'livre' livre.id %}">Supprimer</a>
         </td>
+         <td>
+            {% if livre.disponible %}
+            <a href="{% url 'bibliothecaire:emprunter_media' %}?type_media=livre&media_id={{ livre.id }}">Emprunter</a>
+            {% endif %}
+        </td>
+        <td>
+            {% if not livre.disponible %}
+            <a href="{% url 'bibliothecaire:retourner_media' 'livre' livre.id %}">Retourner</a>
+            {% endif %}
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="5">Aucun livre trouvé</td>
+        <td colspan="6">Aucun livre trouvé</td>
     </tr>
     {% endfor %}
 </table>
@@ -39,6 +52,8 @@
         <th>Disponible</th>
         <th>Modifier</th>
         <th>Supprimer</th>
+        <th>Emprunter média</th>
+        <th>Retourner média</th>
     </tr>
     {% for cd in cds %}
     <tr>
@@ -51,10 +66,20 @@
         <td>
             <a href="{% url 'bibliothecaire:supprimer_media' 'cd' cd.id %}">Supprimer</a>
         </td>
+        <td>
+            {% if cd.disponible %}
+            <a href="{% url 'bibliothecaire:emprunter_media' %}?type_media=cd&media_id={{ cd.id  }}">Emprunter</a>
+            {% endif %}
+        </td>
+        <td>
+            {% if not cd.disponible %}
+            <a href="{% url 'bibliothecaire:retourner_media' 'cd' cd.id %}">Retourner</a>
+            {% endif %}
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="5">Aucun CD trouvé</td>
+        <td colspan="6">Aucun CD trouvé</td>
     </tr>
     {% endfor %}
 </table>
@@ -67,6 +92,9 @@
         <th>Disponible</th>
         <th>Modifier</th>
         <th>Supprimer</th>
+        <th>Emprunter média</th>
+        <th>Retourner média</th>
+
     </tr>
     {% for dvd in dvds %}
     <tr>
@@ -79,10 +107,20 @@
         <td>
             <a href="{% url 'bibliothecaire:supprimer_media' 'dvd' dvd.id %}">Supprimer</a>
         </td>
+        <td>
+            {% if dvd.disponible %}
+            <a href="{% url 'bibliothecaire:emprunter_media' %}?type_media=dvd&media_id={{ dvd.id  }}">Emprunter</a>
+            {% endif %}
+        </td>
+        <td>
+            {% if not dvd.disponible %}
+            <a href="{% url 'bibliothecaire:retourer_media' 'dvd' dvd.id %}">Retourner</a>
+            {% endif %}
+        </td>
     </tr>
     {% empty %}
     <tr>
-        <td colspan="5">Aucun DVD trouvé</td>
+        <td colspan="6">Aucun DVD trouvé</td>
     </tr>
     {% endfor %}
 </table>

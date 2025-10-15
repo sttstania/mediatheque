@@ -13,13 +13,21 @@
     <tr>
         <th>Nom</th>
         <th>Nombre d'emprunts</th>
+        <th>Bloqué</th>
         <th>Modifier</th>
         <th>Supprimer</th>
     </tr>
     {% for membre in membres %}
     <tr>
         <td>{{ membre.nom }}</td>
-        <td>{{ membre.emprunts.count|default:0 }}</td>  {# Affiche le nombre d'emprunts  #}
+        <td>{{ membre.nb_emprunts }}</td>  {# Affiche le nombre d'emprunts  #}
+        <td>
+            {% if membre.emprunteur.bloque %}
+                🚫 Oui
+            {% else %}
+                ✅ Non
+            {% endif %}
+        </td>
         <td>
             <a href="{% url 'bibliothecaire:modifier_membre' membre.id %}">Modifier</a>
         </td>
@@ -29,7 +37,7 @@
     </tr>
     {% empty %}
     <tr>
-        <td colspan="4">Aucun membre trouvé.</td>
+        <td colspan="5">Aucun membre trouvé.</td>
     </tr>
     {% endfor %}
 </table>

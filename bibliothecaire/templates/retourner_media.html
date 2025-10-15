@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Retourner un média{% endblock %}
+
+{% block content %}
+<h1>Retourner un média</h1>
+
+{% if message %}
+    <p>{{ message }}</p>
+{% else %}
+    <p>Voulez-vous marquer <strong>{{ media.titre }}</strong> comme retourné ?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">✅ Confirmer le retour</button>
+
+    </form>
+{% endif %}
+{% endblock %}

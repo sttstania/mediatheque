@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Membre, Livre, JeuDePlateau, CD, DVD, Media
-from .forms import CreationMembre, AjouterMedia
+from .models import Membre, Livre, JeuDePlateau, CD, DVD, Emprunteur, Emprunt
+from .forms import CreationMembre, AjouterMedia, EmpruntMediaForm
 
 
 def creation_membre(request):
@@ -35,6 +35,8 @@ def supprimer_membre(request, membre_id):
 
 def liste_membres(request):
     membre = Membre.objects.all()
+    for m in membre:
+        m.nb_emprunts = len(m.emprunteur.medias) if hasattr(m, 'emprunteur') else 0
     return render(request,'liste_membres.html',{'membres':membre})
 
 def liste_media(request):
@@ -75,9 +77,9 @@ def ajouter_media(request):
             # creation objet selon type média
             if type_media == "livre":
                 Livre.objects.create(titre=titre, auteur=createur)
-            elif type_media == "CD":
+            elif type_media == "cd":
                 CD.objects.create(titre=titre, artiste=createur)
-            elif type_media == "DVD":
+            elif type_media == "dvd":
                 DVD.objects.create(titre=titre, realisateur=createur)
             elif type_media == "jeu":
                 JeuDePlateau.objects.create(titre=titre, createur=createur)
@@ -92,10 +94,10 @@ def modifier_media(request, type_media, media_id):
     if type_media.lower() == 'livre':
         media = get_object_or_404(Livre, id=media_id)
         champ_createur = 'auteur'
-    elif type_media.lower() == 'CD':
+    elif type_media.lower() == 'cd':
         media = get_object_or_404(CD, id=media_id)
         champ_createur = 'artiste'
-    elif type_media.lower() == 'DVD':
+    elif type_media.lower() == 'dvd':
         media = get_object_or_404(DVD, id=media_id)
         champ_createur = 'realisateur'
 
@@ -140,3 +142,77 @@ def supprimer_media(request, type_media, media_id):
         return redirect("bibliothecaire:liste_media")
 
     return render(request, "supprimer_media.html", {"media": media })
+
+def emprunter_media(request):
+    # Récuperer le type de média et ID depuis l'URL
+    type_media = request.GET.get('type_media')
+    media_id = request.GET.get('media_id')
+
+    if request.method == "POST":
+        form = EmpruntMediaForm(request.POST, type_media=type_media)
+        if form.is_valid():
+            membre = form.cleaned_data['membre']
+            media_id = form.cleaned_data['media']
+
+            # recupère ou crée l'emprunteur associé au membre
+            emprunteur, _ = Emprunteur.objects.get_or_create(membre=membre)
+
+            # Recuperer le media selectionné
+            if type_media == "livre":
+                media = get_object_or_404(Livre, id=media_id)
+            elif type_media == "cd":
+                media = get_object_or_404(CD, id=media_id)
+            elif type_media == "dvd":
+                media = get_object_or_404(DVD, id=media_id)
+            else:
+                raise ValueError("Type de média inconnu.")
+
+            # tente d'emprunter média
+            try:
+                emprunteur.emprunter_media(media)
+                return redirect("bibliothecaire:liste_media")
+            except Exception as e:
+                form.add_error(None, str(e)) # Si erreur, on l'affiche dans le formulaire
+
+    else:
+        form = EmpruntMediaForm(type_media=type_media)
+
+    # Affiche le formulaire
+    return render(request, "emprunter_media.html", {"form": form})
+
+def retourner_media(request, type_media, media_id):
+    #Récuperer le bon média
+    if type_media.lower() == 'livre':
+        media = get_object_or_404(Livre, id=media_id)
+    elif type_media.lower() == 'cd':
+        media = get_object_or_404(CD, id=media_id)
+    elif type_media.lower() == 'dvd':
+        media = get_object_or_404(DVD, id=media_id)
+    else:
+        raise ValueError("Type de media inconnu.")
+
+    # Vérifier s'il est bien emprunté
+    if media.disponible:
+        return render(request, "retourner_media.html", {
+            "media": media,
+            "message": "Ce média n'est pas actuellement emprunté."
+        })
+
+    # Si confirmation de retour
+
+    if request.method == "POST":
+        emprunt = Emprunt.objects.filter(
+            emprunteur=media.emprunteur,
+            date_retour__isnull=True
+        ).filter(
+            **{type_media.lower(): media}
+        ).first()
+
+        if emprunt:
+            emprunt.retourner()
+
+        media.retourner()
+
+        return redirect("bibliothecaire:liste_media")
+
+    return render(request, "retourner_media.html", {"media": media})
