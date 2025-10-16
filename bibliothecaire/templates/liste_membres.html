@@ -12,49 +12,45 @@
 <table>
     <tr>
         <th>Nom</th>
-        <th>Nombre d'emprunts</th>
         <th>Médias empruntés</th>
         <th>Bloqué</th>
         <th>Modifier</th>
         <th>Supprimer</th>
     </tr>
+
     {% for membre in membres %}
     <tr>
         <td>{{ membre.nom }}</td>
-        <td>{{ membre.nb_emprunts }}</td>  {# Affiche le nombre d'emprunts  #}
         <td>
-            {% for emprunt in membre.emprunt.emprunts_actuels %}
-                {% if emprunt.livre %}
-                    {{ emprunt.livre.titre }} (Livre)  - {{ emprunt.jours_emprunt }} jours<br>
-                {% endif %}
-                {% if emprunt.cd %}
-                    {{ emprunt.cd.titre }} (CD) - {{ emprunt.jours_emprunt }} jours<br>
-                {% endif %}
-                {% if emprunt.dvd %}
-                    {{ emprunt.dvd.titre }} (DVD) - {{ emprunt.jours_emprunt }} jours<br>
-                {% endif %}
-            {% empty %}
+            {% if membre.emprunteur %}
+                {% for emprunt in membre.emprunteur.emprunt_set.all %}
+                    {% if emprunt.livre %}
+                        {{ emprunt.livre.titre }} (Livre) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% elif emprunt.cd %}
+                        {{ emprunt.cd.titre }} (CD) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% elif emprunt.dvd %}
+                        {{ emprunt.dvd.titre }} (DVD) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% else %}
+                        Média supprimé — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            {% else %}
                 Aucun média emprunté
-            {% endfor %}
+            {% endif %}
         </td>
         <td>
-            {% if membre.emprunteur.bloque %}
+            {% if membre.emprunteur and membre.emprunteur.bloque %}
                 🚫 Oui
             {% else %}
                 ✅ Non
             {% endif %}
         </td>
-        <td>
-            <a href="{% url 'bibliothecaire:modifier_membre' membre.id %}">Modifier</a>
-        </td>
-        <td>
-            <a href="{% url 'bibliothecaire:supprimer_membre' membre.id %}">Supprimer</a>
-        </td>
+        <td><a href="{% url 'bibliothecaire:modifier_membre' membre.id %}">Modifier</a></td>
+        <td><a href="{% url 'bibliothecaire:supprimer_membre' membre.id %}">Supprimer</a></td>
     </tr>
     {% empty %}
-    <tr>
-        <td colspan="5">Aucun membre trouvé.</td>
-    </tr>
+    <tr><td colspan="5">Aucun membre trouvé.</td></tr>
     {% endfor %}
 </table>
 {% endblock %}

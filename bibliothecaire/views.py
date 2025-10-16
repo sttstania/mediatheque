@@ -33,11 +33,36 @@ def supprimer_membre(request, membre_id):
             return redirect("bibliothecaire:liste_membres")
         return render(request, "supprimer_membre.html", {"membre": membre})
 
+
 def liste_membres(request):
-    membre = Membre.objects.all()
-    for m in membre:
-        m.nb_emprunts = len(m.emprunteur.medias) if hasattr(m, 'emprunteur') else 0
-    return render(request,'liste_membres.html',{'membres':membre})
+    membres = Membre.objects.all()
+
+    for m in membres:
+        if hasattr(m, 'emprunteur'):
+            emprunteur = m.emprunteur
+            emprunteur.verifier_retard()
+
+            m.nb_emprunts = len(emprunteur.medias)
+            m.medias = []
+
+            for media in emprunteur.medias:
+                # On ajoute un attribut 'type_media' lisible pour le template
+                if hasattr(media, "auteur"):
+                    media.type_media = "Livre"
+                elif hasattr(media, "artiste"):
+                    media.type_media = "CD"
+                elif hasattr(media, "realisateur"):
+                    media.type_media = "DVD"
+                else:
+                    media.type_media = "Inconnu"
+
+                m.medias.append(media)
+        else:
+            m.nb_emprunts = 0
+            m.medias = []
+
+    return render(request, 'liste_membres.html', {'membres': membres})
+
 
 def liste_media(request):
     livres = Livre.objects.all()
