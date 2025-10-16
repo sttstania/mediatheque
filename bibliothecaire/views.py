@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Membre, Livre, JeuDePlateau, CD, DVD, Emprunteur, Emprunt
@@ -33,7 +34,7 @@ def supprimer_membre(request, membre_id):
             return redirect("bibliothecaire:liste_membres")
         return render(request, "supprimer_membre.html", {"membre": membre})
 
-
+@login_required
 def liste_membres(request):
     membres = Membre.objects.all()
 
@@ -63,7 +64,7 @@ def liste_membres(request):
 
     return render(request, 'liste_membres.html', {'membres': membres})
 
-
+@login_required
 def liste_media(request):
     livres = Livre.objects.all()
     cds = CD.objects.all()
@@ -75,22 +76,27 @@ def liste_media(request):
         {'livres': livres, 'cds': cds,'dvds': dvds,'jeux': jeux, 'show_nav': True},
     )
 
+@login_required
 def liste_livre(request):
     livres = Livre.objects.all()
     return render(request, 'liste_livre.html', {'livres': livres, 'show_nav': True})
 
+@login_required
 def liste_cd(request):
     cds = CD.objects.all()
     return render(request, 'liste_cd.html', {'cds': cds, 'show_nav': True})
 
+@login_required
 def liste_dvd(request):
     dvds = DVD.objects.all()
     return render(request, 'liste_dvd.html', {'dvds': dvds, 'show_nav': True})
 
+@login_required
 def liste_jeux(request):
     jeux = JeuDePlateau.objects.all()
     return render(request, 'liste_jeux.html', {'jeux': jeux, 'show_nav': True})
 
+@login_required
 def ajouter_media(request):
     if request.method == "POST":
         form = AjouterMedia(request.POST)
@@ -115,6 +121,7 @@ def ajouter_media(request):
 
     return render(request, "ajouter_media.html", {"form": form})
 
+@login_required
 def modifier_media(request, type_media, media_id):
     if type_media.lower() == 'livre':
         media = get_object_or_404(Livre, id=media_id)
@@ -150,6 +157,7 @@ def modifier_media(request, type_media, media_id):
         form = AjouterMedia(initial=initial_data)
     return render(request, "modifier_media.html", {"form": form, "media": media})
 
+@login_required
 def supprimer_media(request, type_media, media_id):
     if type_media.lower() == 'livre':
         media = get_object_or_404(Livre, id=media_id)
@@ -168,6 +176,7 @@ def supprimer_media(request, type_media, media_id):
 
     return render(request, "supprimer_media.html", {"media": media })
 
+@login_required
 def emprunter_media(request):
     # Récuperer le type de média et ID depuis l'URL
     type_media = request.GET.get('type_media')
@@ -205,6 +214,7 @@ def emprunter_media(request):
     # Affiche le formulaire
     return render(request, "emprunter_media.html", {"form": form})
 
+@login_required
 def retourner_media(request, type_media, media_id):
     #Récuperer le bon média
     if type_media.lower() == 'livre':
