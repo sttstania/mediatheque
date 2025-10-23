@@ -1,3 +1,6 @@
+import logging
+
+from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -5,6 +8,28 @@ from .models import Membre, Livre, JeuDePlateau, CD, DVD, Emprunteur, Emprunt
 from .forms import CreationMembre, AjouterMedia, EmpruntMediaForm
 
 
+def accueil(request):
+    return render(request, 'accueil.html')
+
+logger = logging.getLogger('mediatheque')
+
+def custom_logout(request):
+    logout(request)
+    return render(request, "logout.html")
+
+def custom_login(request):
+    if request.method == "POST":
+        username = request.POST.get['username']
+        password = request.POST.get['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("bibliothecaire:liste_membres")
+        else:
+            return render(request, "login.html")
+
+
+@login_required
 def creation_membre(request):
     if request.method == "POST":
         form = CreationMembre(request.POST)
@@ -16,6 +41,7 @@ def creation_membre(request):
         form = CreationMembre()
     return render(request, "creation_membre.html", {"form": form})
 
+@login_required
 def modifier_membre(request, membre_id):
     membre = get_object_or_404(Membre, id=membre_id)
     if request.method == "POST":
@@ -27,6 +53,7 @@ def modifier_membre(request, membre_id):
         form = CreationMembre(instance=membre)
     return render(request, "modifier_membre.html", {"form": form, "membre": membre})
 
+@login_required
 def supprimer_membre(request, membre_id):
         membre = get_object_or_404(Membre, id=membre_id)
         if request.method == "POST":
@@ -34,7 +61,8 @@ def supprimer_membre(request, membre_id):
             return redirect("bibliothecaire:liste_membres")
         return render(request, "supprimer_membre.html", {"membre": membre})
 
-@login_required
+
+@login_required()
 def liste_membres(request):
     membres = Membre.objects.all()
 
@@ -64,7 +92,7 @@ def liste_membres(request):
 
     return render(request, 'liste_membres.html', {'membres': membres})
 
-@login_required
+
 def liste_media(request):
     livres = Livre.objects.all()
     cds = CD.objects.all()
@@ -76,22 +104,22 @@ def liste_media(request):
         {'livres': livres, 'cds': cds,'dvds': dvds,'jeux': jeux, 'show_nav': True},
     )
 
-@login_required
+
 def liste_livre(request):
     livres = Livre.objects.all()
     return render(request, 'liste_livre.html', {'livres': livres, 'show_nav': True})
 
-@login_required
+
 def liste_cd(request):
     cds = CD.objects.all()
     return render(request, 'liste_cd.html', {'cds': cds, 'show_nav': True})
 
-@login_required
+
 def liste_dvd(request):
     dvds = DVD.objects.all()
     return render(request, 'liste_dvd.html', {'dvds': dvds, 'show_nav': True})
 
-@login_required
+
 def liste_jeux(request):
     jeux = JeuDePlateau.objects.all()
     return render(request, 'liste_jeux.html', {'jeux': jeux, 'show_nav': True})
@@ -180,7 +208,7 @@ def supprimer_media(request, type_media, media_id):
 def emprunter_media(request):
     # Récuperer le type de média et ID depuis l'URL
     type_media = request.GET.get('type_media')
-    media_id = request.GET.get('media_id')
+    media_id = request.GET.get('media')
 
     if request.method == "POST":
         form = EmpruntMediaForm(request.POST, type_media=type_media)

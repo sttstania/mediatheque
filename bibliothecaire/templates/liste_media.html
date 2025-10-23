@@ -114,7 +114,7 @@
         </td>
         <td>
             {% if not dvd.disponible %}
-            <a href="{% url 'bibliothecaire:retourer_media' 'dvd' dvd.id %}">Retourner</a>
+            <a href="{% url 'bibliothecaire:retourner_media' 'dvd' dvd.id %}">Retourner</a>
             {% endif %}
         </td>
     </tr>

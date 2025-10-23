@@ -3,9 +3,11 @@ from . import views
 
 app_name = 'bibliothecaire'
 urlpatterns = [
-    # Page d’accueil du bibliothécaire : liste des membres
-    path('', views.liste_membres, name='liste_membres'),
+    # Page d’accueil:
+    path('', views.accueil, name='accueil'),
+    path('login/', views.custom_login, name='login'),
     # Gestion des membres
+    path('membres/', views.liste_membres, name='liste_membres'),
     path('creation_membre/', views.creation_membre, name='creation_membre'),
     path('<int:membre_id>/modifier/', views.modifier_membre, name='modifier_membre'),
     path('<int:membre_id>/supprimer/', views.supprimer_membre, name='supprimer_membre'),
@@ -20,5 +22,4 @@ urlpatterns = [
     path('media/supprimer/<str:type_media>/<int:media_id>/', views.supprimer_media, name='supprimer_media'),
     path('media/emprunter/', views.emprunter_media, name='emprunter_media'),
     path('retourner/<str:type_media>/<int:media_id>/', views.retourner_media, name='retourner_media'),
-
 ]
