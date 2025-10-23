@@ -1,10 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Liste des membres{% endblock %}
+
+{% block content %}
+<h2>Liste des membres</h2>
+
+<div>
+    <a href="{% url 'bibliothecaire:creation_membre' %}">➕ Ajouter un membre</a>
+</div>
+
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Médias empruntés</th>
+        <th>Bloqué</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
+    </tr>
+
+    {% for membre in membres %}
+    <tr>
+        <td>{{ membre.nom }}</td>
+        <td>
+            {% if membre.emprunteur %}
+                {% for emprunt in membre.emprunteur.emprunt_set.all %}
+                    {% if emprunt.livre %}
+                        {{ emprunt.livre.titre }} (Livre) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% elif emprunt.cd %}
+                        {{ emprunt.cd.titre }} (CD) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% elif emprunt.dvd %}
+                        {{ emprunt.dvd.titre }} (DVD) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% else %}
+                        Média supprimé — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            {% else %}
+                Aucun média emprunté
+            {% endif %}
+        </td>
+        <td>
+            {% if membre.emprunteur and membre.emprunteur.bloque %}
+                🚫 Oui
+            {% else %}
+                ✅ Non
+            {% endif %}
+        </td>
+        <td><a href="{% url 'bibliothecaire:modifier_membre' membre.id %}">Modifier</a></td>
+        <td><a href="{% url 'bibliothecaire:supprimer_membre' membre.id %}">Supprimer</a></td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Aucun membre trouvé.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

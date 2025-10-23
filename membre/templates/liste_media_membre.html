@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Liste de médias{% endblock %}
+{% block content %}
+<h1>Liste des médias</h1>
+
+<h2>Livres</h2>
+<table>
+    <tr>
+        <th>Nom du livre</th>
+        <th>Auteur</th>
+        <th>Disponible</th>
+    </tr>
+    {% for livre in livres %}
+    <tr>
+        <td>{{ livre.titre }}</td>
+        <td>{{ livre.auteur }}</td>
+        <td>{{ livre.disponible|yesno:"Oui,Non" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Aucun livre trouvé</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>CDs</h2>
+<table>
+    <tr>
+        <th>Nom du CD</th>
+        <th>Artiste</th>
+        <th>Disponible</th>
+    </tr>
+    {% for cd in cds %}
+    <tr>
+        <td>{{ cd.titre }}</td>
+        <td>{{ cd.artiste }}</td>
+        <td>{{ cd.disponible|yesno:"Oui,Non" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Aucun CD trouvé</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>DVDs</h2>
+<table>
+    <tr>
+        <th>Nom du DVD</th>
+        <th>Réalisateur</th>
+        <th>Disponible</th>
+    </tr>
+    {% for dvd in dvds %}
+    <tr>
+        <td>{{ dvd.titre }}</td>
+        <td>{{ dvd.realisateur }}</td>
+        <td>{{ dvd.disponible|yesno:"Oui,Non" }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="3">Aucun DVD trouvé</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Jeux de plateau</h2>
+<table>
+    <tr>
+        <th>Nom du jeu de plateau</th>
+        <th>Créateur</th>
+    </tr>
+    {% for jeu in jeux %}
+    <tr>
+        <td>{{jeu.titre}}</td>
+        <td>{{jeu.createur}}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">Aucun jeu de plateau trouvé</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

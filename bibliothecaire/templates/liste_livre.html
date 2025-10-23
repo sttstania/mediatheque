@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Liste de Livres{% endblock %}
+{% block content %}
 
-</body>
-</html>
+<h2>Livres</h2>
+<table>
+    <tr>
+        <th>Nom du livre</th>
+        <th>Auteur</th>
+        <th>Disponible</th>
+        <th>Modifier</th>
+        <th>Supprimer</th>
+    </tr>
+    {% for livre in livres %}
+    <tr>
+        <td>{{ livre.titre }}</td>
+        <td>{{ livre.auteur }}</td>
+        <td>{{ livre.disponible|yesno:"Oui,Non" }}</td>
+        <td>
+            <a href="{% url 'bibliothecaire:modifier_media' 'livre' livre.id %}">Modifier</a>
+        </td>
+        <td>
+            <a href="{% url 'bibliothecaire:supprimer_media' 'livre' livre.id %}">Supprimer</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5">Aucun livre trouvé</td>
+    </tr>
+    {% endfor %}
+</table>
+
+ {% endblock %}

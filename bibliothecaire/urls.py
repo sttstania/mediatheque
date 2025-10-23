@@ -3,8 +3,23 @@ from . import views
 
 app_name = 'bibliothecaire'
 urlpatterns = [
-    path('liste_media/', views.liste_media, name='liste_media'),
-    path('liste_membres/', views.liste_membres, name='liste_membres'),
-    #path('liste_livre', views.liste_livre, name='liste_livre'),
+    # Page d’accueil:
+    path('', views.accueil, name='accueil'),
+    path('login/', views.custom_login, name='login'),
+    # Gestion des membres
+    path('membres/', views.liste_membres, name='liste_membres'),
     path('creation_membre/', views.creation_membre, name='creation_membre'),
+    path('<int:membre_id>/modifier/', views.modifier_membre, name='modifier_membre'),
+    path('<int:membre_id>/supprimer/', views.supprimer_membre, name='supprimer_membre'),
+    # Médias
+    path('media/', views.liste_media, name='liste_media'),
+    path('media/livres/', views.liste_livre, name='liste_livre'),
+    path('media/cds/', views.liste_cd, name='liste_cd'),
+    path('media/dvds/', views.liste_dvd, name='liste_dvd'),
+    path('media/jeux/', views.liste_jeux, name='liste_jeux'),
+    path('media/ajouter/', views.ajouter_media, name='ajouter_media'),
+    path('media/modifier/<str:type_media>/<int:media_id>/', views.modifier_media, name='modifier_media'),
+    path('media/supprimer/<str:type_media>/<int:media_id>/', views.supprimer_media, name='supprimer_media'),
+    path('media/emprunter/', views.emprunter_media, name='emprunter_media'),
+    path('retourner/<str:type_media>/<int:media_id>/', views.retourner_media, name='retourner_media'),
 ]

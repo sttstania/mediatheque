@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Médiathèque{% endblock %}
+{% block content %}
+<h1>Bienvenue à la médiathèque</h1>
+
+<button>
+    <a href="{% url 'bibliothecaire:liste_media' %}">Espace membres</a>
+</button>
+<button><a href="{% url 'bibliothecaire:login' %}">Bibliothécaire</a> </button>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Supprimer un membre{% endblock %}
+{% block content %}
+<h1>Supprimer le membre: {{ membre.nom }}</h1>
+
+<p>Êtes-vous sûr de vouloir supprimer ce membre ? </p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Oui, supprimer</button>
+    <a href="{% url 'bibliothecaire:liste_membres' %}">Annuler</a>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Emprunter un média{% endblock %}
+{% block content %}
+
+<h1>Emprunter un média</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Emprunter</button>
+</form>
+<a href="{% url 'bibliothecaire:liste_media' %}">Retour à la liste des médias</a>
+{% endblock %}

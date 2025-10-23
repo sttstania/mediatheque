@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Ajouter un média{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit">Enregistrer</button>
+</form>
+
+<div>
+    <a href="{% url 'bibliothecaire:liste_media' %}">Retour à la liste des médias</a>
+</div>
+{% endblock %}
