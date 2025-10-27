@@ -65,7 +65,7 @@ def supprimer_membre(request, membre_id):
 
 
 def liste_membres(request):
-    membres = Membre.objects.all()
+    membres = Membre.objects.all().order_by('nom')
 
     for m in membres:
         if hasattr(m, 'emprunteur'):
@@ -96,16 +96,16 @@ def liste_membres(request):
 
 def liste_media(request):
     media_type = request.GET.get('type', 'tous')
-    livres = Livre.objects.all() if media_type in ['tous', 'livre'] else []
-    cds = CD.objects.all() if media_type in ['tous', 'cd'] else []
-    dvds = DVD.objects.all() if media_type in ['tous', 'dvd'] else []
-    jeux = JeuDePlateau.objects.all() if media_type in ['tous', 'jeu'] else []
+    livres = Livre.objects.all().order_by('titre') if media_type in ['tous', 'livre'] else []
+    cds = CD.objects.all().order_by('titre') if media_type in ['tous', 'cd'] else []
+    dvds = DVD.objects.all().order_by('titre') if media_type in ['tous', 'dvd'] else []
+    jeux = JeuDePlateau.objects.all().order_by('titre') if media_type in ['tous', 'jeu'] else []
 
     types = [
         {'type': 'tous', 'label': 'Tous'},
         {'type': 'livre', 'label': 'Livre'},
-        {'type': 'cd', 'label': 'CD'},
-        {'type': 'dvd', 'label': 'DVD'},
+        {'type': 'cd', 'label': 'CDs'},
+        {'type': 'dvd', 'label': 'DVDs'},
         {'type': 'jeu', 'label': 'Jeux de plateau'},
     ]
     return render(
@@ -121,25 +121,6 @@ def liste_media(request):
         },
     )
 
-
-def liste_livre(request):
-    livres = Livre.objects.all()
-    return render(request, 'liste_livre.html', {'livres': livres, 'show_nav': True})
-
-
-def liste_cd(request):
-    cds = CD.objects.all()
-    return render(request, 'liste_cd.html', {'cds': cds, 'show_nav': True})
-
-
-def liste_dvd(request):
-    dvds = DVD.objects.all()
-    return render(request, 'liste_dvd.html', {'dvds': dvds, 'show_nav': True})
-
-
-def liste_jeux(request):
-    jeux = JeuDePlateau.objects.all()
-    return render(request, 'liste_jeux.html', {'jeux': jeux, 'show_nav': True})
 
 @login_required
 def ajouter_media(request):

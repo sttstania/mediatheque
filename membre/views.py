@@ -5,10 +5,10 @@ from bibliothecaire.models import Livre, CD, DVD, JeuDePlateau
 def liste_media_membres(request):
     media_type = request.GET.get('type', 'tous')
 
-    livres = Livre.objects.all() if media_type in ['tous', 'livre'] else []
-    dvds = DVD.objects.all() if media_type in ['tous', 'dvd'] else []
-    cds = CD.objects.all() if media_type in ['tous', 'cd'] else []
-    jeux = JeuDePlateau.objects.all() if media_type in ['tous', 'jeu'] else []
+    livres = Livre.objects.all().order_by('titre') if media_type in ['tous', 'livre'] else []
+    dvds = DVD.objects.all().order_by('titre') if media_type in ['tous', 'dvd'] else []
+    cds = CD.objects.all().order_by('titre') if media_type in ['tous', 'cd'] else []
+    jeux = JeuDePlateau.objects.all().order_by('titre') if media_type in ['tous', 'jeu'] else []
 
     types = [
         {'type': 'tous', 'label': 'Tous'},
