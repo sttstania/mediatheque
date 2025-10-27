@@ -19,14 +19,15 @@ def custom_logout(request):
 
 def custom_login(request):
     if request.method == "POST":
-        username = request.POST.get['username']
-        password = request.POST.get['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("bibliothecaire:liste_membres")
+            return redirect("bibliothecaire:accueil")
         else:
-            return render(request, "login.html")
+            return render(request, "login.html", {"error": "Identifiants incorrects"})
+    return render(request, "login.html")
 
 
 @login_required
@@ -62,7 +63,7 @@ def supprimer_membre(request, membre_id):
         return render(request, "supprimer_membre.html", {"membre": membre})
 
 
-@login_required()
+
 def liste_membres(request):
     membres = Membre.objects.all()
 
@@ -94,14 +95,30 @@ def liste_membres(request):
 
 
 def liste_media(request):
-    livres = Livre.objects.all()
-    cds = CD.objects.all()
-    dvds = DVD.objects.all()
-    jeux = JeuDePlateau.objects.all()
+    media_type = request.GET.get('type', 'tous')
+    livres = Livre.objects.all() if media_type in ['tous', 'livre'] else []
+    cds = CD.objects.all() if media_type in ['tous', 'cd'] else []
+    dvds = DVD.objects.all() if media_type in ['tous', 'dvd'] else []
+    jeux = JeuDePlateau.objects.all() if media_type in ['tous', 'jeu'] else []
+
+    types = [
+        {'type': 'tous', 'label': 'Tous'},
+        {'type': 'livre', 'label': 'Livre'},
+        {'type': 'cd', 'label': 'CD'},
+        {'type': 'dvd', 'label': 'DVD'},
+        {'type': 'jeu', 'label': 'Jeux de plateau'},
+    ]
     return render(
         request,
         'liste_media.html',
-        {'livres': livres, 'cds': cds,'dvds': dvds,'jeux': jeux, 'show_nav': True},
+        {
+            'livres': livres,
+            'cds': cds,
+            'dvds': dvds,
+            'jeux': jeux,
+            'selected_type': media_type,
+            'types' : types,
+        },
     )
 
 
@@ -208,7 +225,7 @@ def supprimer_media(request, type_media, media_id):
 def emprunter_media(request):
     # Récuperer le type de média et ID depuis l'URL
     type_media = request.GET.get('type_media')
-    media_id = request.GET.get('media')
+
 
     if request.method == "POST":
         form = EmpruntMediaForm(request.POST, type_media=type_media)

@@ -12,21 +12,9 @@
         <nav>
             <a href="{% url 'bibliothecaire:liste_membres' %}">La liste des membres</a>
             <a href="{% url 'bibliothecaire:liste_media' %}">La liste des médias</a>
-
+            <a href="{% url 'bibliothecaire:logout' %}">Déconnexion</a>
         </nav>
 
-        <!-- Menu de navigation pour médias-->
-        {% if show_nav %}
-        <nav>
-            <a href="{% url 'bibliothecaire:liste_livre' %}">Livres</a>
-            <a href="{% url 'bibliothecaire:liste_cd' %}">CDs</a>
-            <a href="{% url 'bibliothecaire:liste_dvd' %}">DVDs</a>
-            <a href="{% url 'bibliothecaire:liste_jeux' %}">Jeux de plateau</a>
-            <a href="{% url 'bibliothecaire:liste_media' %}">Tous</a>
-            <!-- Ajouter un média, visible pour bibliothecaires -->
-            <a href="{% url 'bibliothecaire:ajouter_media' %}">➕ Ajouter un média</a>
-        </nav>
-        {% endif %}
     </header>
 
     <main>

@@ -1,11 +1,36 @@
-{% extends "base.html" %}
-{% block title %}Médiathèque{% endblock %}
-{% block content %}
-<h1>Bienvenue à la médiathèque</h1>
+<!DOCTYPE html>
+<html lang="fr">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Médiathèque</title>
+</head>
+<body>
+    <h1>Bienvenue à la médiathèque</h1>
 
-<button>
-    <a href="{% url 'bibliothecaire:liste_media' %}">Espace membres</a>
-</button>
-<button><a href="{% url 'bibliothecaire:login' %}">Bibliothécaire</a> </button>
+    <!-- Espace membre : si non connecté -->
+    {% if not user.is_authenticated %}
+        <button>
+            <a href="{% url 'membre:liste_media_membre' %}">Espace membre</a>
+        </button>
+    {% endif %}
 
-{% endblock %}
+    <!-- Espace bibliothécaire : nécessite authentification -->
+    {% if user.is_authenticated %}
+        <button>
+            <a href="{% url 'bibliothecaire:liste_media' %}">Liste des médias</a>
+        </button>
+        <button>
+            <a href="{% url 'bibliothecaire:liste_membres' %}">Liste des membres</a>
+        </button>
+        <button>
+            <a href="{% url 'bibliothecaire:logout' %}">Déconnexion</a>
+        </button>
+    {% else %}
+        <button>
+            <a href="{% url 'bibliothecaire:login' %}">Connexion bibliothécaire</a>
+        </button>
+    {% endif %}
+</body>
+</html>

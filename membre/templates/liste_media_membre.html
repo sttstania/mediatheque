@@ -1,8 +1,15 @@
-{% extends "base.html" %}
+{% extends "base_membre.html" %}
 {% block title %}Liste de médias{% endblock %}
 {% block content %}
 <h1>Liste des médias</h1>
 
+<nav>
+    {% for t in types %}
+        <a href="?type={{ t.type }}" class="{% if selected_type == t.type %}selected{% endif %}">{{ t.label }}</a>{% if not forloop.last %} | {% endif %}
+    {% endfor %}
+</nav>
+
+{% if livres %}
 <h2>Livres</h2>
 <table>
     <tr>
@@ -22,7 +29,9 @@
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
+{% if cds %}
 <h2>CDs</h2>
 <table>
     <tr>
@@ -42,7 +51,9 @@
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
+{% if dvds %}
 <h2>DVDs</h2>
 <table>
     <tr>
@@ -62,7 +73,9 @@
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 
+{% if jeux %}
 <h2>Jeux de plateau</h2>
 <table>
     <tr>
@@ -80,4 +93,5 @@
     </tr>
     {% endfor %}
 </table>
+{% endif %}
 {% endblock %}
