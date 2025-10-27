@@ -14,10 +14,6 @@ urlpatterns = [
     path('<int:membre_id>/supprimer/', views.supprimer_membre, name='supprimer_membre'),
     # Médias
     path('media/', views.liste_media, name='liste_media'),
-    path('media/livres/', views.liste_livre, name='liste_livre'),
-    path('media/cds/', views.liste_cd, name='liste_cd'),
-    path('media/dvds/', views.liste_dvd, name='liste_dvd'),
-    path('media/jeux/', views.liste_jeux, name='liste_jeux'),
     path('media/ajouter/', views.ajouter_media, name='ajouter_media'),
     path('media/modifier/<str:type_media>/<int:media_id>/', views.modifier_media, name='modifier_media'),
     path('media/supprimer/<str:type_media>/<int:media_id>/', views.supprimer_media, name='supprimer_media'),

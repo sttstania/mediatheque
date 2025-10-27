@@ -5,7 +5,10 @@
 
 <nav>
     {% for t in types %}
-        <a href="?type={{ t.type }}" class="{% if selected_type == t.type %}selected{% endif %}">{{ t.label }}</a>{% if not forloop.last %} | {% endif %}
+        <a href="?type={{ t.type }}" class="{% if selected_type == t.type %}selected{% endif %}">
+            {{ t.label }}
+        </a>
+    {% if not forloop.last %} | {% endif %}
     {% endfor %}
      <a href="{% url 'bibliothecaire:ajouter_media' %}">➕ Ajouter un média</a>
 </nav>
