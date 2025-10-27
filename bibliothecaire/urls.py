@@ -6,6 +6,7 @@ urlpatterns = [
     # Page d’accueil:
     path('', views.accueil, name='accueil'),
     path('login/', views.custom_login, name='login'),
+    path('logout/', views.custom_logout, name='logout'),
     # Gestion des membres
     path('membres/', views.liste_membres, name='liste_membres'),
     path('creation_membre/', views.creation_membre, name='creation_membre'),

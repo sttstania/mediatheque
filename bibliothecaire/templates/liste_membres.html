@@ -12,7 +12,6 @@
 <table>
     <tr>
         <th>Nom</th>
-        <th>Médias empruntés</th>
         <th>Bloqué</th>
         <th>Modifier</th>
         <th>Supprimer</th>
@@ -21,24 +20,6 @@
     {% for membre in membres %}
     <tr>
         <td>{{ membre.nom }}</td>
-        <td>
-            {% if membre.emprunteur %}
-                {% for emprunt in membre.emprunteur.emprunt_set.all %}
-                    {% if emprunt.livre %}
-                        {{ emprunt.livre.titre }} (Livre) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
-                    {% elif emprunt.cd %}
-                        {{ emprunt.cd.titre }} (CD) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
-                    {% elif emprunt.dvd %}
-                        {{ emprunt.dvd.titre }} (DVD) — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
-                    {% else %}
-                        Média supprimé — emprunté le {{ emprunt.date_emprunt|date:"d/m/Y" }}
-                    {% endif %}
-                    <br>
-                {% endfor %}
-            {% else %}
-                Aucun média emprunté
-            {% endif %}
-        </td>
         <td>
             {% if membre.emprunteur and membre.emprunteur.bloque %}
                 🚫 Oui
