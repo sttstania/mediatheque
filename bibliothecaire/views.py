@@ -65,7 +65,7 @@ def supprimer_membre(request, membre_id):
 
 
 def liste_membres(request):
-    membres = Membre.objects.all()
+    membres = Membre.objects.all().order_by('nom')
 
     for m in membres:
         if hasattr(m, 'emprunteur'):
