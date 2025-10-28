@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
         <h1>Menu des bibliothécaires</h1>
-        <nav>
-            <a href="{% url 'bibliothecaire:liste_membres' %}">La liste des membres</a>
-            <a href="{% url 'bibliothecaire:liste_media' %}">La liste des médias</a>
-            <a href="{% url 'bibliothecaire:logout' %}">Déconnexion</a>
+        <nav class="navbarr">
+            <div class="nav-left">
+                <a href="{% url 'bibliothecaire:liste_membres' %}">La liste des membres</a>
+                <a href="{% url 'bibliothecaire:liste_media' %}">La liste des médias</a>
+                <a href="{% url 'bibliothecaire:logout' %}">Déconnexion</a>
+            </div>
         </nav>
 
     </header>
