@@ -1,3 +1,65 @@
+
+# --- Python ---
 __pycache__/
+*.py[cod]
+*$py.class
+
+# --- Environnement virtuel ---
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Fichiers Django ---
+*.log
+*.pot
 *.pyc
+*.mo
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# --- Fichiers d'environnement (ne jamais versionner) ---
+.env
+.env.*
+
+# --- Fichiers de tests et cache ---
+*.coverage
+.coverage
+.pytest_cache/
+.cache/
+
+# --- IDE / Éditeurs ---
+.vscode/
 .idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Systèmes d’exploitation ---
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+Desktop.ini
+
+# --- Build / Distribution ---
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Fichiers temporaires / sauvegardes ---
+*.tmp
+*.swp
+*.bak
+*~
+
+
+
+# --- Exceptions importantes (à garder) ---
+!manage.py
+!requirements.txt
+!.env.example
